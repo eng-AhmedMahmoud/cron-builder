@@ -1,0 +1,21 @@
+{
+  "name": "cron-builder",
+  "version": "0.1.0",
+  "description": "Read, write & preview cron expressions instantly in the browser — plain-English descriptions, next run times, and a preset builder. Dependency-free, zero build step.",
+  "license": "GPL-3.0-or-later",
+  "author": "Ahmed Mahmoud (Devya) <contact@devya.dev>",
+  "homepage": "https://devya.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eng-AhmedMahmoud/cron-builder.git"
+  },
+  "keywords": [
+    "cron",
+    "scheduler",
+    "cli-alternative",
+    "devtools"
+  ],
+  "scripts": {
+    "dev": "npx --yes serve ."
+  }
+}

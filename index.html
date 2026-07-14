@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>cron-builder — read, write &amp; preview cron expressions</title>
+  <meta name="description" content="Type a cron expression and get a plain-English description plus the next run times, or build one from friendly presets. 100% client-side, zero dependencies." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">⌘</span>
+        <h1 class="brand-name">cron-builder</h1>
+      </div>
+      <p class="tagline">Read, write &amp; preview cron expressions — instantly, in your browser.</p>
+    </header>
+
+    <main>
+      <!-- Expression input -->
+      <section class="panel" aria-labelledby="expr-heading">
+        <div class="panel-head">
+          <h2 id="expr-heading" class="panel-title">Cron expression</h2>
+          <button id="copyBtn" class="btn btn-ghost" type="button" aria-label="Copy expression to clipboard">Copy</button>
+        </div>
+
+        <div class="input-wrap">
+          <input
+            id="cronInput"
+            class="cron-input"
+            type="text"
+            spellcheck="false"
+            autocomplete="off"
+            autocapitalize="off"
+            autocorrect="off"
+            aria-describedby="cronError fieldLegend"
+            value="*/15 9-17 * * 1-5"
+          />
+          <span id="statusDot" class="status-dot" aria-hidden="true"></span>
+        </div>
+
+        <div id="fieldLegend" class="field-legend" aria-hidden="true">
+          <span class="field"><code id="f-minute" class="field-val">*/15</code><small>minute</small></span>
+          <span class="field"><code id="f-hour" class="field-val">9-17</code><small>hour</small></span>
+          <span class="field"><code id="f-dom" class="field-val">*</code><small>day</small></span>
+          <span class="field"><code id="f-month" class="field-val">*</code><small>month</small></span>
+          <span class="field"><code id="f-dow" class="field-val">1-5</code><small>weekday</small></span>
+        </div>
+
+        <p id="cronError" class="cron-error" role="alert" hidden></p>
+      </section>
+
+      <!-- Description -->
+      <section class="panel" aria-labelledby="desc-heading">
+        <h2 id="desc-heading" class="panel-title">In plain English</h2>
+        <p id="humanText" class="human-text">—</p>
+      </section>
+
+      <div class="grid">
+        <!-- Preset builder -->
+        <section class="panel" aria-labelledby="preset-heading">
+          <h2 id="preset-heading" class="panel-title">Build from a preset</h2>
+          <p class="panel-sub">Pick a schedule and we'll generate the expression.</p>
+
+          <div class="control">
+            <label for="freqSelect">Frequency</label>
+            <select id="freqSelect">
+              <option value="everyMinute">Every minute</option>
+              <option value="everyNMinutes">Every N minutes</option>
+              <option value="hourly">Hourly</option>
+              <option value="daily" selected>Daily at time</option>
+              <option value="weekly">Weekly on day at time</option>
+              <option value="monthly">Monthly on date at time</option>
+            </select>
+          </div>
+
+          <div class="control" id="ctrl-n" hidden>
+            <label for="everyN">Every</label>
+            <div class="inline">
+              <input id="everyN" type="number" min="1" max="59" value="5" />
+              <span class="unit">minutes</span>
+            </div>
+          </div>
+
+          <div class="control" id="ctrl-time" hidden>
+            <label for="timePick">At time</label>
+            <input id="timePick" type="time" value="09:00" />
+          </div>
+
+          <div class="control" id="ctrl-day" hidden>
+            <label for="daySelect">On day</label>
+            <select id="daySelect">
+              <option value="1" selected>Monday</option>
+              <option value="2">Tuesday</option>
+              <option value="3">Wednesday</option>
+              <option value="4">Thursday</option>
+              <option value="5">Friday</option>
+              <option value="6">Saturday</option>
+              <option value="0">Sunday</option>
+            </select>
+          </div>
+
+          <div class="control" id="ctrl-date" hidden>
+            <label for="dateSelect">On date</label>
+            <select id="dateSelect"></select>
+          </div>
+
+          <button id="applyPreset" class="btn btn-accent" type="button">Generate expression</button>
+        </section>
+
+        <!-- Next runs -->
+        <section class="panel" aria-labelledby="next-heading">
+          <h2 id="next-heading" class="panel-title">Next 5 runs</h2>
+          <p class="panel-sub">Computed from your local time.</p>
+          <ol id="nextRuns" class="next-runs"></ol>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">
+      Built by <a href="https://devya.dev" target="_blank" rel="noopener">Devya</a>
+      · <a href="https://devya.dev" target="_blank" rel="noopener">devya.dev</a>
+      · <a href="https://github.com/eng-AhmedMahmoud/cron-builder" target="_blank" rel="noopener">Open source (GPL-3.0)</a>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
